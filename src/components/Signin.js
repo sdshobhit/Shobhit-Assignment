@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addUserEmail } from '../redux/authSlice';
 import { SigninUser } from '../redux/authSlice';
 
 const SignIn = () => {
@@ -11,7 +8,6 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const history = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -23,10 +19,9 @@ const SignIn = () => {
   
     try {
       const response = await dispatch(SigninUser({ email, password }));
-      console.log(response)
       if (!response.payload.error) {
-        dispatch(addUserEmail(response.meta.arg.email))
-        history('/dashboard');
+        // dispatch(addUserEmail(response?.meta?.arg?.email))
+        // history('/');
       } else {
         // Sign in failed, display error message
         console.log(response)

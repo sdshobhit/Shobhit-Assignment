@@ -72,11 +72,12 @@ const authSlice = createSlice({
     state.token=localStorage.getItem("token")
    },
    addUser:(state,action)=>{
-    state.user=localStorage.getItem("user")
+    state.user=action.payload
    },
    logout:(state,action)=>{
     state.token=null;
-    localStorage.clear()
+    state.user=null;
+    localStorage.clear();
    },
    addUserEmail:(state,action)=>{
     state.user = action.payload
@@ -91,8 +92,8 @@ const authSlice = createSlice({
       .addCase(SigninUser.fulfilled, (state, action) => {
         state.loading = false;
         state.message = "Signin successful";
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = action?.meta?.arg;
+        state.token = action?.payload?.token;
 
         // Set items in local storage
         localStorage.setItem("message", state.message);
